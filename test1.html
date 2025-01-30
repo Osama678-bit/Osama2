@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Script Editor</title>
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    #editor-container {
+      height: 500px;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h3 {
+      text-align: center;
+    }
+
+    hr {
+      margin: 20px 0;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div id="editor-container">
+    <h1>A CUP OF COFFEE</h1>
+    <p><strong>Written by</strong></p>
+    <p>Michael Robert Myers</p>
+    <p><em>First Draft</em></p>
+    <p>MichaelRobMyers@gmail.com</p>
+    <p>&copy; Rocket Monster Films</p>
+    <hr>
+    <h3>FADE IN ON:</h3>
+    <p><strong>INT. COFFEE SHOP - DAY</strong></p>
+    <p>
+      A rugged hand picks up a spoon and stirs his coffee with it. He takes the coffee and gently sips. This is 
+      <strong>MARK, 43</strong>, and 
+      <span style="color: blue;">with a tough exterior but as cool as John Wayne.</span>
+    </p>
+    <p>
+      Across from him sits a fidgety man. <strong>AARON DECK.</strong> Aaron looks down at his coffee. A creamy brown. 
+      He looks back up at Mark.
+    </p>
+    <p><strong>AARON</strong></p>
+    <p>So, how's Susan?</p>
+    <p><strong>MARK</strong></p>
+    <p>Good. She finally opened her haberdasher. So, she's enthralled.</p>
+  </div>
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script>
+    var quill = new Quill('#editor-container', {
+      theme: 'snow'  'bubble' 
+    });
+  </script>
+</body>
+                      </html>
