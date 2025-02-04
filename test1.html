@@ -1,0 +1,326 @@
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
+<div id="toolbar">
+  <button class="ql-scene">Scene</button>
+  <button class="ql-action">Action</button>
+  <button class="ql-character">Character</button>
+  <button class="ql-dialogue">Dialogue</button>
+  <button class="ql-parenthetical">(Parenthetical)</button>
+  <button class="ql-bold">B</button>
+  <button class="ql-italic">I</button>
+</div>
+
+<div id="editor-container">
+  <p><strong>A CUP OF COFFEE</strong></p>
+  <p>Written by</p>
+  <p>Michael Robert Myers<br>First Draft<br>MichaelRobMyers@gmail.com<br>© Rocket Monster Films</p>
+  <p><strong>FADE IN ON:</strong></p>
+  <p>
+    INT. COFFEE SHOP – DAY<br>
+    A rugged hand picks up a spoon and stirs his coffee with it.<br>
+    He takes the coffee and gently sips. This is MARK, 43, and<br>
+    <em>with a tough exterior but as cool as John Wayne.</em>
+  </p>
+  <p>
+    Across from him sits a fidgety man, AARON DECK. Aaron looks<br>
+    down at his coffee. A creamy brown. He looks back up at Mark.
+  </p>
+  <p><strong>AARON</strong><br>So, how’s Susan?</p>
+  <p><strong>MARK</strong><br>Good. She finally opened her<br>haberdasher. So, she’s enthralled.</p>
+</div>
+
+<div class="side-buttons">
+  <div id="file-upload">
+    <button id="choose-file">Choose File</button>
+    <span>ACupOfCoffee_screenplay.pdf</span>
+  </div>
+  <button id="upload-script">Upload Script</button>
+  <button id="export-pdf">Export PDF</button>
+</div>
+<style>
+#toolbar {
+  display: flex;
+  gap: 0; 
+  border: 1px solid #ccc;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+#toolbar button {
+  padding: 8px 15px;
+  margin: 0;
+  border: 1px solid #ddd;
+  border-right: none; 
+  background-color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#toolbar button:last-child {
+  border-right: 1px solid #ddd;
+}
+
+#editor-container {
+  border: 1px solid #ccc;
+  padding: 15px;
+  min-height: 300px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #ffffff;
+  margin-right: 200px; 
+}
+
+.side-buttons {
+  position: absolute;
+  top: 80px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-buttons button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: #28a745;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#file-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#choose-file {
+  padding: 8px 15px;
+  background-color: #007bff; 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#file-upload span {
+  font-size: 14px;
+  color: #333;
+}
+</style>
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+  var quill = new Quill('#editor-container', {
+    theme: 'snow',
+    modules: {
+      toolbar: '#toolbar'
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // التعامل مع محرر Quill.js
+    var quill = new Quill('#editor-container', {
+      theme: 'snow',
+      modules: { toolbar: '#toolbar' }
+    });
+
+    // وظائف أزرار شريط الأدوات
+    document.querySelectorAll("#toolbar button").forEach(button => {
+      button.addEventListener("click", function() {
+        let action = this.classList[0].replace('ql-', '');
+        if (action === "bold" || action === "italic") {
+          quill.format(action, true);
+        } else {
+          quill.insertText(quill.getLength(), `\n[${action.toUpperCase()}]\n`, { bold: true });
+        }
+      });
+    });
+
+    // زر "Choose File" لفتح نافذة اختيار ملف
+    document.getElementById("choose-file").addEventListener("click", function() {
+      let input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".txt, .pdf, .docx"; // تحديد أنواع الملفات المسموح بها
+      input.onchange = function(event) {
+        let file = event.target.files[0];
+        if (file) {
+          alert("File chosen: " + file.name);
+        }
+      };
+      input.click();
+    });
+
+    // زر "Upload Script" لمحاكاة تحميل الملف
+    document.getElementById("upload-script").addEventListener("click", function() {
+      alert("Uploading script... (Functionality to be implemented)");
+    });
+
+    // زر "Export PDF" لحفظ محتوى المحرر كملف PDF
+    document.getElementById("export-pdf").addEventListener("click", function() {
+      let content = quill.root.innerHTML;
+      let blob = new Blob([content], { type: "application/pdf" });
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "exported_script.pdf";
+      link.click();
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // تهيئة محرر Quill.js
+    var quill = new Quill('#editor-container', {
+      theme: 'snow',
+      modules: { toolbar: '#toolbar' }
+    });
+
+    // ⬇⬇⬇⬇ وظائف أزرار التنسيق (Scene, Action, Character...) ⬇⬇⬇⬇
+    document.querySelector(".ql-scene").addEventListener("click", function() {
+      quill.insertText(quill.getLength(), "\n\nSCENE HEADING\n", { bold: true, align: "center" });
+    });
+
+    document.querySelector(".ql-action").addEventListener("click", function() {
+      quill.insertText(quill.getLength(), "\n(ACTION)\n", { italic: true });
+    });
+
+    document.querySelector(".ql-character").addEventListener("click", function() {
+      quill.insertText(quill.getLength(), "\nCHARACTER NAME\n", { bold: true, align: "center", font: "monospace" });
+    });
+
+    document.querySelector(".ql-dialogue").addEventListener("click", function() {
+      quill.insertText(quill.getLength(), "\nDIALOGUE...\n", { font: "monospace" });
+    });
+
+    document.querySelector(".ql-parenthetical").addEventListener("click", function() {
+      quill.insertText(quill.getLength(), "\n(parenthetical)\n", { italic: true });
+    });
+
+    // ⬇⬇⬇⬇ زر اختيار الملف (Choose File) ⬇⬇⬇⬇
+    document.getElementById("choose-file").addEventListener("click", function() {
+      let input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".txt, .pdf, .docx"; 
+      input.onchange = function(event) {
+        let file = event.target.files[0];
+        if (file) {
+          alert("File chosen: " + file.name);
+          document.querySelector("#file-upload span").innerText = file.name;
+        }
+      };
+      input.click();
+    });
+
+    // ⬇⬇⬇⬇ زر رفع السكريبت (Upload Script) ⬇⬇⬇⬇
+    document.getElementById("upload-script").addEventListener("click", function() {
+      let fileName = document.querySelector("#file-upload span").innerText;
+      if (fileName !== "ACupOfCoffee_screenplay.pdf") {
+        alert("No file chosen! Please select a file first.");
+      } else {
+        alert("Uploading script: " + fileName + " (Functionality to be implemented)");
+      }
+    });
+
+    // ⬇⬇⬇⬇ زر تصدير PDF (Export PDF) ⬇⬇⬇⬇
+    document.getElementById("export-pdf").addEventListener("click", function() {
+      let content = quill.root.innerHTML;
+      let blob = new Blob([content], { type: "application/pdf" });
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "exported_script.pdf";
+      link.click();
+    });
+
+    // ⬇⬇⬇⬇ زر فتح ملف `ACupOfCoffee_screenplay.pdf` عند النقر عليه ⬇⬇⬇⬇
+    document.querySelector("#file-upload span").addEventListener("click", function() {
+      alert("Opening file: ACupOfCoffee_screenplay.pdf (Functionality to be implemented)");
+    });
+
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // تهيئة محرر Quill.js
+    var quill = new Quill('#editor-container', {
+      theme: 'snow',
+      modules: { toolbar: '#toolbar' }
+    });
+
+    // ⬇⬇⬇⬇ وظائف أزرار شريط الأدوات ⬇⬇⬇⬇
+    document.querySelectorAll("#toolbar button").forEach(button => {
+      button.addEventListener("click", function() {
+        let action = this.classList[0].replace('ql-', '');
+
+        switch (action) {
+          case "bold":
+          case "italic":
+            quill.format(action, true);
+            break;
+          
+          case "scene":
+            quill.insertText(quill.getLength(), "\n\nEXT. LOCATION - DAY\n", { bold: true });
+            break;
+          
+          case "action":
+            quill.insertText(quill.getLength(), "\n(Action: Describe what happens in the scene)\n", { italic: true });
+            break;
+          
+          case "character":
+            quill.insertText(quill.getLength(), "\nCHARACTER NAME\n", { bold: true, align: "center" });
+            break;
+          
+          case "dialogue":
+            quill.insertText(quill.getLength(), "\n   (Dialogue here...)\n");
+            break;
+          
+          case "parenthetical":
+            quill.insertText(quill.getLength(), "\n   (softly)\n", { italic: true });
+            break;
+
+          default:
+            quill.insertText(quill.getLength(), `\n[${action.toUpperCase()}]\n`, { bold: true });
+        }
+      });
+    });
+
+    // ⬇⬇⬇⬇ زر اختيار الملف (Choose File) ⬇⬇⬇⬇
+    document.getElementById("choose-file").addEventListener("click", function() {
+      let input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".txt, .pdf, .docx"; 
+      input.onchange = function(event) {
+        let file = event.target.files[0];
+        if (file) {
+          alert("File chosen: " + file.name);
+          document.querySelector("#file-upload span").innerText = file.name;
+        }
+      };
+      input.click();
+    });
+
+    // ⬇⬇⬇⬇ زر رفع السكريبت (Upload Script) ⬇⬇⬇⬇
+    document.getElementById("upload-script").addEventListener("click", function() {
+      let fileName = document.querySelector("#file-upload span").innerText;
+      if (fileName !== "ACupOfCoffee_screenplay.pdf") {
+        alert("No file chosen! Please select a file first.");
+      } else {
+        alert("Uploading script: " + fileName + " (Functionality to be implemented)");
+      }
+    });
+
+    // ⬇⬇⬇⬇ زر تصدير PDF (Export PDF) ⬇⬇⬇⬇
+    document.getElementById("export-pdf").addEventListener("click", function() {
+      let content = quill.root.innerHTML;
+      let blob = new Blob([content], { type: "application/pdf" });
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "exported_script.pdf";
+      link.click();
+    });
+
+    // ⬇⬇⬇⬇ زر فتح ملف `ACupOfCoffee_screenplay.pdf` عند النقر عليه ⬇⬇⬇⬇
+    document.querySelector("#file-upload span").addEventListener("click", function() {
+      alert("Opening file: ACupOfCoffee_screenplay.pdf (Functionality to be implemented)");
+    });
+
+  });
+    </script>
